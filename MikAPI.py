@@ -23,9 +23,10 @@ class APImikrotik_v1:
         if outputcomand.strip():
             output = sshCli.send_command(outputcomand)
             file = open("BackUp-Config-Mikrotik-Netmiko.txt", "w")
-
-            file.write(output)
-            file.close()
+            getLog = output.split(" ")
+            print(getLog)
+            # file.write(getLog)
+            # file.close()
         # command = self.inputcomand
 
 
