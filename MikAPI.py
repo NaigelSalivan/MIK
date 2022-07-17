@@ -27,13 +27,36 @@ class APImikrotik_v1:
 
             dOutput = []
             n=0
-
+            join = ""
             for elemet in getLog:
                 a = elemet.strip()
 
                 aformated = a.split(" ", 2)
+
                 if aformated[1] == 'pptp,ppp,info':
-                    aformated[2] = aformated[2].split(":")
+                    aformated[2] = aformated[2].strip().split(":")
+                    # print(aformated)
+                if aformated[1] == 'system,info,account':
+
+                    aformated[2] = aformated[2].strip().split(":")
+                    print(aformated)
+                if 'error' in aformated[1]:
+
+                    # textLog = ' '.join(map(str, aformated[2]))
+                    textStringLog = "".join(aformated[2])
+
+                    # print("Inter: " + textStringLog)
+                    textStringLog = textStringLog.replace(' from', '')
+
+                    textStringLog = textStringLog.replace(' user', '', 1)
+                    textStringLog = textStringLog.replace(' via', '', 1)
+                    textStringLog = textStringLog.replace(' for', '', 1)
+                    textStringLog = textStringLog.replace('to romon network', 'romon_network', 1)
+                    textStringLog = textStringLog.replace(' ', '_', 1)
+
+                    # print("Exit: " + textStringLog)
+                    aformated[2] = textStringLog.strip().split(" ")
+                    # print("Data tools: " + textStringLog)
                     print(aformated)
 
                 dOutput.append(aformated)
