@@ -1,8 +1,6 @@
 import netmiko
 from netmiko import ConnectHandler
-from formating import clearlog
 class APImikrotik_v1:
-
     def __init__(self, mk_ip, mk_port, mk_user, mk_psw, inputcomand, outputcomand):
         self.mk_ip=mk_ip
         self.mk_port=mk_port
@@ -38,16 +36,27 @@ class APImikrotik_v1:
                 if aformated[1] == 'pptp,ppp,info':
                     aformated[2] = aformated[2].strip().split(":")
                     # print(aformated)
-
-
                 if aformated[1] == 'system,info,account':
 
-                    # aformated[2] = aformated[2].strip().split(":")
-                    aformated[2] = clearlog(aformated[2],2).strip().split(" ")
-                    # print(aformated)
+                    aformated[2] = aformated[2].strip().split(":")
+                    print(aformated)
                 if 'error' in aformated[1]:
-                    # textStringLog = clearlog(aformated[2])
-                    aformated[2] = clearlog(aformated[2],1).strip().split(" ")
+
+                    # textLog = ' '.join(map(str, aformated[2]))
+                    textStringLog = "".join(aformated[2])
+
+                    # print("Inter: " + textStringLog)
+                    textStringLog = textStringLog.replace(' from', '')
+
+                    textStringLog = textStringLog.replace(' user', '', 1)
+                    textStringLog = textStringLog.replace(' via', '', 1)
+                    textStringLog = textStringLog.replace(' for', '', 1)
+                    textStringLog = textStringLog.replace('to romon network', 'romon_network', 1)
+                    textStringLog = textStringLog.replace(' ', '_', 1)
+
+                    # print("Exit: " + textStringLog)
+                    aformated[2] = textStringLog.strip().split(" ")
+                    # print("Data tools: " + textStringLog)
                     print(aformated)
 
                 dOutput.append(aformated)
@@ -63,9 +72,9 @@ class APImikrotik_v1:
             # print(len(getLog))
             print(dOutput)
 
-            with open('BackUp-Config-Mikrotik-Netmiko.txt', 'w') as filehandle:
-                for listitem in dOutput:
-                    filehandle.write('%s\n' % listitem)
+            # with open('BackUp-Config-Mikrotik-Netmiko.txt', 'w') as filehandle:
+            #     for listitem in dOutput:
+            #         filehandle.write('%s\n' % listitem)
 
 
             # file.write(OutputTxt)
