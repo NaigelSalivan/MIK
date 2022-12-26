@@ -16,4 +16,4 @@ def Generate_PWD(quantity, length):
         pwd_list.append(password)
     return pwd_list
 
-print(Generate_PWD(5,50))
+print(Generate_PWD(1,10),)
