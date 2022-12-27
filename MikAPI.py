@@ -1,8 +1,7 @@
 import netmiko
 from netmiko import ConnectHandler
 
-from mytools import get_users_vpn
-
+from mytools import get_new_ip4vpn
 
 class APImikrotik_v1:
     def __init__(self, mk_ip, mk_port, mk_user, mk_psw, inputcomand, outputcomand):
@@ -27,22 +26,11 @@ class APImikrotik_v1:
 
         if outputcomand.strip():
             output = sshCli.send_command(outputcomand)
-            users_vpn = get_users_vpn(output)
-            #file = open("BackUp-Config-Mikrotik-Netmiko.txt", "w")
+            users_vpn = get_new_ip4vpn(output)
+
 
             print(users_vpn)
         sshCli.disconnect()
-
-# print(len(getLog))
-# print(dOutput)
-
-# with open('BackUp-Config-Mikrotik-Netmiko.txt', 'w') as filehandle:
-#     for listitem in dOutput:
-#         filehandle.write('%s\n' % listitem)
-
-# file.write(OutputTxt)
-# file.close()
-# command = self.inputcomand
 
 
 
