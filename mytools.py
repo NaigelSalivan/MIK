@@ -1,7 +1,5 @@
 import random
 import re
-from typing import List, Any
-
 
 def Generate_PWD(quantity, length):
     quantity_pwd = int(quantity)     #количество паролей
@@ -19,34 +17,36 @@ def Generate_PWD(quantity, length):
         pwd_list.append(password)
     return pwd_list
 
-def get_new_ip4vpn(output_console):
+def get_new_ip4vpn(quantity, output_console):
+    quantity_ip = int(quantity)
     #command_to_mik = "ppp secret print"
-    output_console = str(output_console).split("\n")
-    user_vpn_list = []
-    print(output_console)
 
+    output_console = str(output_console).split("\n")
+    ip_vpn_list = []
     #print(output_console)
     for elemet in output_console:
         a = elemet.strip()
         result = re.search(r'((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))', a)
         if result != None:
-            print(result.group(0))
-            user_vpn_list.append(result.group(0).strip().split("."))
+            #print(result.group(0))
+            ip_vpn_list.append(result.group(0).split("."))
+            ip_vpn_list[-1] = list(map(int,ip_vpn_list[-1]))
+    ip_vpn_list.sort()
 
-    print('======================')
-
-    user_vpn_list.sort()
-    print(user_vpn_list)
-
-    last_ip = user_vpn_list
-    pozition_addr = user_vpn_list[-1].strip().split(".")
+    last_ip = ip_vpn_list[-1]
+    pozition_addr = last_ip
+    new_ip_list = []
+    #for i in range(1):
     pozition_addr[3] = int(pozition_addr[3]) + 1
-    new_ip = ".".join(map(str, pozition_addr))
+    new_ip_list = ".".join(map(str, pozition_addr))
 
-     #print(last_ip)
-     #print(new_ip)
+    #print(last_ip)
+    #print(new_ip_list)
 
-    return new_ip
+    return new_ip_list
+
+
+
 #print(Generate_PWD(1,10),)
 
 #   создание пользователя

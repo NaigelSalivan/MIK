@@ -26,11 +26,10 @@ class APImikrotik_v1:
 
         if outputcomand.strip():
             output = sshCli.send_command(outputcomand)
-            users_vpn = get_new_ip4vpn(output)
-
-
+            users_vpn = get_new_ip4vpn(1,output)
+            #getLog = output.split("\n")
+            print('123')
             print(users_vpn)
         sshCli.disconnect()
-
 
 
